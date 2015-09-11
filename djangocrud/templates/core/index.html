@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} Index {% endblock %}
+
+{% block main_content %}
+
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li class="active">Title</li>
+</ol>
+
+<h3> Index </h3>
+
+{% if objects %}
+    <ul>
+    {% for object in objects %}
+        <li><a href="/{{ object.title }}/{{ object.id }}/">{{ object.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No objects are available.</p>
+{% endif %}
+{% endblock %}
+
