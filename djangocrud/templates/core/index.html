@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load core_tags %}
 
 {% block title %} Index {% endblock %}
 
@@ -12,11 +13,23 @@
 <h3> Index </h3>
 
 {% if objects %}
-    <ul>
-    {% for object in objects %}
-        <li><a href="/{{ object.title }}/{{ object.id }}/">{{ object.name }}</a></li>
+<table class="table table-condensed">
+	{% entity_preview as entity_instance %}
+	<tr>
+		{% for name, value in entity_instance.items.0.1.items %}
+		<th>{{ name }}</th>
+        {% endfor %}
+        <th></th>
+    </tr>
+    {% for instance in entity_instance.items %}
+		<tr>
+			{% for name, value in instance.1.items %}
+				<td>{{ value }}</td>
+			{% endfor %}
+			<td><a href="{% url 'detail' entity_title 150 %}">View Detail</a></td>
+	    </tr>
     {% endfor %}
-    </ul>
+</table>
 {% else %}
     <p>No objects are available.</p>
 {% endif %}

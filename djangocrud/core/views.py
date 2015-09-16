@@ -12,10 +12,6 @@ from djangocrud.core.helpers import (
     get_form_instance
 )
 
-from djangocrud.core.models import (
-    Supplier,
-)
-
 
 class EntityList(generic.ListView):
     template_name = 'core/index.html'
@@ -27,6 +23,11 @@ class EntityList(generic.ListView):
 
         return super(EntityList, self).dispatch(
             request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(EntityList, self).get_context_data(**kwargs)
+        context['entity_title'] = self.kwargs.get('model_name', None)
+        return context
 
 
 class EntityDetail(generic.DetailView):
@@ -49,6 +50,7 @@ class EntityDelete(generic.DeleteView):
 
         return super(EntityDelete, self).dispatch(
             request, *args, **kwargs)
+
 
 class EntityUpdate(generic.View):
     def get(self, request, *args, **kwargs):
