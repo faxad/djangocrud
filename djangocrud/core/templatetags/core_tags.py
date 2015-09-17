@@ -4,6 +4,17 @@ from djangocrud.core.constants import FIELD_DISPLAY_CONFIG
 
 register = template.Library()
 
+def get_entity_data(instance, model, option):
+    field_value = {}
+
+    for field in model._meta.fields:
+        field_config = FIELD_DISPLAY_CONFIG[model.__name__]
+        if field.name in field_config and option in field_config[field.name]:
+            field_value[field.name] = getattr(
+                instance, field.name)
+
+    return field_value
+
 
 @register.filter(is_safe=True)
 def label_with_class(value, arg):
@@ -12,24 +23,10 @@ def label_with_class(value, arg):
 
 @register.assignment_tag(takes_context=True)
 def model_field_values(context, option):
-    field_value = {}
-
-    if 'objects' in context:
-        instance = context['objects'][0]
-    elif 'object' in context:
-        instance = context['object']
-
+    instance = context['object']
     model = type(instance)
 
-    for field in model._meta.fields:
-        field_name = field.verbose_name
-        field_config = FIELD_DISPLAY_CONFIG[model.__name__]
-        if field_name in field_config and option in field_config[field_name]:
-
-            field_value[field_name] = getattr(
-                instance, field.name)
-
-    return field_value
+    return get_entity_data(instance, model, option)
 
 
 @register.assignment_tag(takes_context=True)
@@ -39,13 +36,7 @@ def entity_preview(context):
     model = type(instances[0])
 
     for instance in instances:
-        _child = {}
-        for field in model._meta.fields:
-            field_config = FIELD_DISPLAY_CONFIG[model.__name__]
-            if field.name in field_config and 'preview' in field_config[field.name]:
-                _child[field.name] = getattr(
-                    instance, field.name)
-
-        _parent[instance.id] = _child
+        _parent[instance.id] = get_entity_data(
+            instance, model, 'preview')
 
     return _parent
