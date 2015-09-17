@@ -41,10 +41,9 @@ def entity_preview(context):
     for instance in instances:
         _child = {}
         for field in model._meta.fields:
-            field_name = field.verbose_name
             field_config = FIELD_DISPLAY_CONFIG[model.__name__]
-            if field_name in field_config and 'preview' in field_config[field_name]:
-                _child[field_name] = getattr(
+            if field.name in field_config and 'preview' in field_config[field.name]:
+                _child[field.name] = getattr(
                     instance, field.name)
 
         _parent[instance.id] = _child

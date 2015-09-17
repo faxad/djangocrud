@@ -26,7 +26,7 @@ class EntityList(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(EntityList, self).get_context_data(**kwargs)
-        context['entity_title'] = self.kwargs.get('model_name', None)
+        #context['entity_title'] = self.kwargs.get('model_name', None)
         return context
 
 
@@ -59,7 +59,7 @@ class EntityUpdate(generic.View):
         context = {
             'form': form(instance=instance),
             'object': instance,
-            'entity_title': instance.title
+            #'entity_title': instance.title
         }
 
         return render(request, 'core/update.html', context)
@@ -78,7 +78,7 @@ class EntityUpdate(generic.View):
             context = {
                 'form': form,
                 'object': instance,
-                'entity_title': instance.title,
+                #'entity_title': instance.title,
                 'error_message': get_errors(form.errors)
             }
 
@@ -93,7 +93,7 @@ class EntityCreate(generic.View):
         form = get_form_instance(**kwargs)
         context = {
             'form': form,
-            'entity_title': get_model_name(**kwargs)
+            #'entity_title': get_model_name(**kwargs)
         }
 
         return render(request, 'core/create.html', context)
@@ -112,7 +112,7 @@ class EntityCreate(generic.View):
             context = {
                 'form': form,
                 'error_message': get_errors(form.errors),
-                'entity_title': get_model_name(**kwargs)
+                #'entity_title': get_model_name(**kwargs)
             }
 
             return render_to_response(

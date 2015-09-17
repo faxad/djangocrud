@@ -9,7 +9,6 @@ MODEL_FORM_FIELDS = MODEL_DISPLAY_FIELDS = {
 
 FIELD_DISPLAY_CONFIG = {
     'Supplier': {
-        'ID': ['preview'],
         'name': ['create', 'update', 'display', 'preview'],
         'remarks': ['create', 'update', 'display', 'preview']
     }
