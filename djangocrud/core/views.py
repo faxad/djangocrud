@@ -7,7 +7,6 @@ from django.views import generic
 from djangocrud.core.helpers import (
     get_errors,
     get_model,
-    get_model_name,
     get_model_instance,
     get_form_instance
 )
@@ -23,11 +22,6 @@ class EntityList(generic.ListView):
 
         return super(EntityList, self).dispatch(
             request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(EntityList, self).get_context_data(**kwargs)
-        #context['entity_title'] = self.kwargs.get('model_name', None)
-        return context
 
 
 class EntityDetail(generic.DetailView):
@@ -53,13 +47,13 @@ class EntityDelete(generic.DeleteView):
 
 
 class EntityUpdate(generic.View):
+
     def get(self, request, *args, **kwargs):
         instance = get_model_instance(**kwargs)
         form = get_form_instance(**kwargs)
         context = {
             'form': form(instance=instance),
             'object': instance,
-            #'entity_title': instance.title
         }
 
         return render(request, 'core/update.html', context)
@@ -78,7 +72,6 @@ class EntityUpdate(generic.View):
             context = {
                 'form': form,
                 'object': instance,
-                #'entity_title': instance.title,
                 'error_message': get_errors(form.errors)
             }
 
@@ -89,12 +82,10 @@ class EntityUpdate(generic.View):
 
 
 class EntityCreate(generic.View):
+
     def get(self, request, *args, **kwargs):
         form = get_form_instance(**kwargs)
-        context = {
-            'form': form,
-            #'entity_title': get_model_name(**kwargs)
-        }
+        context = {'form': form}
 
         return render(request, 'core/create.html', context)
 
@@ -111,8 +102,7 @@ class EntityCreate(generic.View):
         else:
             context = {
                 'form': form,
-                'error_message': get_errors(form.errors),
-                #'entity_title': get_model_name(**kwargs)
+                'error_message': get_errors(form.errors)
             }
 
             return render_to_response(
