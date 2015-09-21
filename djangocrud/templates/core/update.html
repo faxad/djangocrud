@@ -3,7 +3,7 @@
 {% block main_content %}
 
 <ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
+  <li><a href="{% url 'main' %}">Home</a></li>
   <li><a href="{% url 'index' entity_title %}">{{ entity_title }}</a></li>
   <li class="active">Update</li>
 </ol>

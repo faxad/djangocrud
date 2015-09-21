@@ -1,4 +1,6 @@
 # helpers
+import inspect
+
 from django.apps import apps
 from django.forms.models import modelform_factory
 
@@ -29,6 +31,13 @@ def get_model_instance(**kwargs):
 
 
 def get_form_instance(**kwargs):
-    return modelform_factory(
-        get_model(**kwargs),
-        fields=FIELD_CONFIG[get_model_name(**kwargs)])
+    fields = []
+    field_config = FIELD_CONFIG[get_model_name(**kwargs)]
+    callee = type(inspect.currentframe().f_back.f_locals['self']).__name__
+    operation = 'create' if 'Create' in callee else 'update'
+
+    for field in field_config:
+        if operation in field_config[field]:
+            fields.append(field)
+
+    return modelform_factory(get_model(**kwargs), fields=fields)

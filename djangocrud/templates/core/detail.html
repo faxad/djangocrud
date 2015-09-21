@@ -4,7 +4,7 @@
 {% block main_content %}
 
 <ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
+  <li><a href="{% url 'main' %}">Home</a></li>
   <li><a href="{% url 'index' object.title %}">{{ object.title }}</a></li>
   <li class="active">Detail</li>
   <li class="active">{{ object.id }}</li>
