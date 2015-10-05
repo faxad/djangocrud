@@ -1,17 +1,19 @@
 from django import template
 
-from djangocrud.core.constants import FIELD_DISPLAY_CONFIG
+from djangocrud.core.constants import FIELD_CONFIG
 
 register = template.Library()
+
 
 def get_entity_data(instance, model, option):
     field_value = {}
 
     for field in model._meta.fields:
-        field_config = FIELD_DISPLAY_CONFIG[model.__name__]
-        if field.name in field_config and option in field_config[field.name]:
-            field_value[field.name] = getattr(
-                instance, field.name)
+        field_config = FIELD_CONFIG[model.__name__]
+        name = field.name
+        if name in field_config and option in field_config[name]:
+            field_value[name] = getattr(
+                instance, name)
 
     return field_value
 

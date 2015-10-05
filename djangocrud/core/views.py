@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
@@ -10,6 +11,14 @@ from djangocrud.core.helpers import (
     get_model_instance,
     get_form_instance
 )
+
+
+def index(request):
+    return render(
+        request,
+        'index.html',
+        {'models': apps.get_app_config(
+            'core').models.values()})
 
 
 class EntityList(generic.ListView):

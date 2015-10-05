@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load core_tags %}
+
+{% block title %} Index {% endblock %}
+
+{% block main_content %}
+
+<ol class="breadcrumb">
+  <li class="active"><a href="#">Home</a></li>
+</ol>
+<ul>
+{% for model in models %}
+	{% with name=model.title%}
+	<li><a href="{% url 'index' name %}">{{name}}</a></li>
+	{% endwith %}
+{% endfor %}
+</ul>
+{% endblock %}
