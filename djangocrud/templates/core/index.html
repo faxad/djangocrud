@@ -9,7 +9,7 @@
   <li><a href="{% url 'main' %}">Home</a></li>
   <li class="active">{{ entity_title }}</li>
 </ol>
-
+<a href="{% url 'create' entity_title %}" class="btn btn-primary" role="button">Create</a>
 <h3>{{ entity_title }} List</h3>
 {{ message }}
 {% if objects %}
