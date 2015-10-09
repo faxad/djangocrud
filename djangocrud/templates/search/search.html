@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
+{% load core_tags %}
 
 {% block main_content %}
-    <h2>Search</h2>
-
-    <form method="get" action=".">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <input type="submit" value="Search">
-                </td>
-            </tr>
-        </table>
-
+<ol class="breadcrumb">
+  <li><a href="{% url 'main' %}">Home</a></li>
+  <li class="active">Search</li>
+</ol>
+    <h3>Search Results</h3>
         {% if query %}
-            <h3>Results</h3>
-            {% for result in page.object_list %}
-                <p>
-                    <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a>
-                </p>
-            {% empty %}
-                <p>No results found.</p>
-            {% endfor %}
+            <table class="table table-striped">
+                <tr>
+                    <th>Title<th>
+                    <th>Brief Description</th>
+                </tr>
+                {% for result in page.object_list %}
+                {% entity_type result.object as entity_name %}
+                    <tr>
+                        <td><a href="{% url 'detail' entity_name result.object.id %}">{{ result.object.name }}</a><td>
+                        <td></td>
+                    </tr>
+                {% empty %}
+                    <p>No results found.</p>
+                {% endfor %}
+            </table>
 
             {% if page.has_previous or page.has_next %}
                 <div>

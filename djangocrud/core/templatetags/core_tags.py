@@ -42,3 +42,8 @@ def entity_preview(context):
             instance, model, 'preview')
 
     return _parent
+
+
+@register.assignment_tag
+def entity_type(object):
+    return type(object).__name__
