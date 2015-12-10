@@ -22,7 +22,7 @@ def get_model_name(**kwargs):
 
 
 def get_model(**kwargs):
-    model = 'core.' + kwargs.get('model_name', None)
+    model = 'core.' + get_model_name(**kwargs)
     return apps.get_model(*model.split('.'))
 
 
@@ -36,8 +36,11 @@ def get_form_instance(**kwargs):
     callee = type(inspect.currentframe().f_back.f_locals['self']).__name__
     operation = 'create' if 'Create' in callee else 'update'
 
+    print field_config
+
     for field in field_config:
         if operation in field_config[field]:
             fields.append(field)
 
+    print fields
     return modelform_factory(get_model(**kwargs), fields=fields)

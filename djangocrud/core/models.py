@@ -13,9 +13,10 @@ from django.db.models import (
 
 class Supplier(Model):
     name = CharField(max_length=200)
+    category = CharField(max_length=10, choices=(('PB', 'Public'), ('PR', 'Private')))
+    remarks = TextField(blank=True, null=True)
     creation_date = DateTimeField('joining date', auto_now_add=True)
     last_updated = DateTimeField('last updated', auto_now=True)
-    remarks = TextField(blank=True, null=True)
 
     def __unicode__(self):
         return self.name
