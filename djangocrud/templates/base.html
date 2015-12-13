@@ -55,6 +55,11 @@
               <button type="submit" class="btn btn-default">Submit</button>
             </form>
           </ul>
+          {% if user.is_authenticated %}
+          <p class="navbar-text pull-right">Logged in as <a href="/auth/logout/?next=/auth/login/">{{ user.username }}</a></p>
+          {% else %}
+          <p class="navbar-text pull-right"><a href="/auth/login/">Log in</a></p>
+          {% endif %}
         </div><!--/.nav-collapse -->
       </div>
     </nav>

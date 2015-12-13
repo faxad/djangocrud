@@ -130,3 +130,8 @@ HAYSTACK_CONNECTIONS = {
         'BATCH_SIZE': 100,
     }
 }
+
+# Auth
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/auth/login/'
