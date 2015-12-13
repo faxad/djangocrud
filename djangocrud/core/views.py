@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.template import RequestContext
 from django.views import generic
 
@@ -13,6 +13,8 @@ from djangocrud.core.helpers import (
     get_model_instance,
     get_form_instance
 )
+
+from djangocrud.core.mixins import AuthMixin
 
 
 @login_required
@@ -57,8 +59,10 @@ class EntityDelete(generic.DeleteView):
         return super(EntityDelete, self).dispatch(
             request, *args, **kwargs)
 
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
-class EntityUpdate(generic.View):
+class EntityUpdate(PermissionRequiredMixin, generic.View):
+    permission_required = 'core.change_supplier'
 
     def get(self, request, *args, **kwargs):
         instance = get_model_instance(**kwargs)
