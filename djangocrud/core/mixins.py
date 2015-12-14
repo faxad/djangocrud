@@ -15,5 +15,5 @@ class BaseEntityMixin(object):
 class AuthMixin(PermissionRequiredMixin):
     def get_permission_required(self):
         return ['core.{0}_{1}'.format(
-            CRUD_OPERATIONS[self.__class__.__name__.strip('Entity').lower()],
+            CRUD_OPERATIONS[self.__class__.__name__.replace('Entity', '').lower()],
             self.request.path.split('/')[1].lower())]

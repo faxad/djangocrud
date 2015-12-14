@@ -26,7 +26,7 @@ def index(request):
             'core').models.values()})
 
 
-class EntityList(LoginRequiredMixin, generic.ListView):
+class EntityList(LoginRequiredMixin, AuthMixin, generic.ListView):
     template_name = 'core/index.html'
     context_object_name = 'objects'
 
@@ -38,7 +38,7 @@ class EntityList(LoginRequiredMixin, generic.ListView):
             request, *args, **kwargs)
 
 
-class EntityDetail(generic.DetailView):
+class EntityDetail(AuthMixin, generic.DetailView):
     template_name = 'core/detail.html'
 
     def dispatch(self, request, *args, **kwargs):
