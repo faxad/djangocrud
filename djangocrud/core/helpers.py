@@ -18,6 +18,10 @@ def get_errors(form_errors):
     return list(set(error_list))
 
 
+def get_all_models():
+    return apps.get_app_config('core').models
+
+
 def get_model_name(request=None, **kwargs):
     return kwargs.get(
         'model_name', request.path.split('/')[1] if request else None)

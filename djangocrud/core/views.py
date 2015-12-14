@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
@@ -10,7 +9,8 @@ from djangocrud.core.helpers import (
     get_errors,
     get_model,
     get_model_instance,
-    get_form_instance
+    get_form_instance,
+    get_all_models
 )
 
 from djangocrud.core.mixins import AuthMixin
@@ -21,8 +21,7 @@ def index(request):
     return render(
         request,
         'index.html',
-        {'models': apps.get_app_config(
-            'core').models.values()})
+        {'models': get_all_models().values()})
 
 
 class EntityList(AuthMixin, generic.ListView):

@@ -1,5 +1,5 @@
+from djangocrud.core.helpers import get_model_name
+
 
 def global_context(request):
-    entity_name = request.get_full_path().split('/')[1]
-
-    return {'entity_title': entity_name}
+    return {'entity_title': get_model_name(request)}
