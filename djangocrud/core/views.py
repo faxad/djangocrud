@@ -59,10 +59,8 @@ class EntityDelete(generic.DeleteView):
         return super(EntityDelete, self).dispatch(
             request, *args, **kwargs)
 
-from django.contrib.auth.mixins import PermissionRequiredMixin
 
-class EntityUpdate(PermissionRequiredMixin, generic.View):
-    permission_required = 'core.change_supplier'
+class EntityUpdate(AuthMixin, generic.View):
 
     def get(self, request, *args, **kwargs):
         instance = get_model_instance(**kwargs)

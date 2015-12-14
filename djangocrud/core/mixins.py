@@ -1,5 +1,4 @@
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import redirect
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class BaseEntityMixin(object):
@@ -11,7 +10,8 @@ class BaseEntityMixin(object):
         return self.__class__.__name__
 
 
-class AuthMixin(UserPassesTestMixin):
-
-    def test_func(self):
-        return redirect('/Denied/')
+class AuthMixin(PermissionRequiredMixin):
+    def get_permission_required(self):
+        print self
+        return ['core.change_{0}'.format(
+            self.request.path.split('/')[1].lower())]
