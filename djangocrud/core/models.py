@@ -9,18 +9,18 @@ from djangocrud.core.validators import *
 
 
 class AbstractEntity(Model):
-    creation_date = DateTimeField('creation date', auto_now_add=True)
-    last_updated = DateTimeField('last updated', auto_now=True)
+    creation_date = DateTimeField('Creation Date', auto_now_add=True)
+    last_updated = DateTimeField('Last Updated', auto_now=True)
 
     class Meta:
         abstract = True
 
 
 class Supplier(AbstractEntity, BaseEntityMixin):
-    name = CharField(max_length=200, validators=[validate_name])
-    category = CharField(max_length=10, choices=(
+    name = CharField("Name", max_length=200, validators=[validate_name])
+    category = CharField(verbose_name="Category/Type", max_length=10, choices=(
         ('PB', 'Public'), ('PR', 'Private')))
-    remarks = TextField(blank=True, null=True)
+    remarks = TextField("Remarks", blank=True, null=True)
 
     def __unicode__(self):
         return self.name

@@ -8,16 +8,18 @@ register = template.Library()
 
 
 def get_entity_data(instance, option):
-    field_config = FIELD_CONFIG[type(instance).__name__]
+    model = type(instance)
+    field_config = FIELD_CONFIG[model.__name__]
 
     def compute(field_config):
         for field_name in field_config:
             if option in field_config[field_name]:
                 yield field_name
 
-    return OrderedDict([(field_name, getattr(
-        instance, field_name)) for field_name in itertools.islice(
-            compute(field_config), len(field_config))])
+    return OrderedDict([(model._meta.get_field(
+        field_name).verbose_name, getattr(
+            instance, field_name)) for field_name in itertools.islice(
+                compute(field_config), len(field_config))])
 
 
 @register.filter(is_safe=True)
@@ -36,11 +38,10 @@ def model_field_values(context, option):
 def entity_preview(context):
     _parent = {}
     instances = context['objects']
-    model = type(instances[0])
 
     for instance in instances:
         _parent[instance.id] = get_entity_data(
-            instance, model, 'preview')
+            instance, 'preview')
 
     return _parent
 
