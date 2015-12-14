@@ -1,3 +1,5 @@
+import itertools
+from collections import OrderedDict
 from django import template
 
 from djangocrud.core.constants import FIELD_CONFIG
@@ -5,17 +7,17 @@ from djangocrud.core.constants import FIELD_CONFIG
 register = template.Library()
 
 
-def get_entity_data(instance, model, option):
-    field_value = {}
+def get_entity_data(instance, option):
+    field_config = FIELD_CONFIG[type(instance).__name__]
 
-    for field in model._meta.fields:
-        field_config = FIELD_CONFIG[model.__name__]
-        name = field.name
-        if name in field_config and option in field_config[name]:
-            field_value[name] = getattr(
-                instance, name)
+    def compute(field_config):
+        for field_name in field_config:
+            if option in field_config[field_name]:
+                yield field_name
 
-    return field_value
+    return OrderedDict([(field_name, getattr(
+        instance, field_name)) for field_name in itertools.islice(
+            compute(field_config), len(field_config))])
 
 
 @register.filter(is_safe=True)
@@ -26,9 +28,8 @@ def label_with_class(value, arg):
 @register.assignment_tag(takes_context=True)
 def model_field_values(context, option):
     instance = context['object']
-    model = type(instance)
 
-    return get_entity_data(instance, model, option)
+    return get_entity_data(instance, option)
 
 
 @register.assignment_tag(takes_context=True)
