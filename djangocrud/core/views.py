@@ -1,9 +1,8 @@
 from django.apps import apps
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.views import generic
 
@@ -26,7 +25,7 @@ def index(request):
             'core').models.values()})
 
 
-class EntityList(LoginRequiredMixin, AuthMixin, generic.ListView):
+class EntityList(AuthMixin, generic.ListView):
     template_name = 'core/index.html'
     context_object_name = 'objects'
 

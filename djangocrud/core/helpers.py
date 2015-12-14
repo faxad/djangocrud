@@ -1,4 +1,5 @@
 # helpers
+
 import inspect
 
 from django.apps import apps
@@ -17,8 +18,9 @@ def get_errors(form_errors):
     return list(set(error_list))
 
 
-def get_model_name(**kwargs):
-    return kwargs.get('model_name', None)
+def get_model_name(request=None, **kwargs):
+    return kwargs.get(
+        'model_name', request.path.split('/')[1] if request else None)
 
 
 def get_model(**kwargs):
