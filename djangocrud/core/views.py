@@ -49,7 +49,7 @@ class EntityDetail(generic.DetailView):
             request, *args, **kwargs)
 
 
-class EntityDelete(generic.DeleteView):
+class EntityDelete(AuthMixin, generic.DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         self.model = get_model(**kwargs)
@@ -95,7 +95,7 @@ class EntityUpdate(AuthMixin, generic.View):
                 context_instance=RequestContext(request))
 
 
-class EntityCreate(generic.View):
+class EntityCreate(AuthMixin, generic.View):
 
     def get(self, request, *args, **kwargs):
         form = get_form_instance(**kwargs)

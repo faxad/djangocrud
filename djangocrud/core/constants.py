@@ -1,6 +1,14 @@
 from collections import OrderedDict as odict
 
 
+CRUD_OPERATIONS = {
+    'create': 'add',
+    'update': 'change',
+    'delete': 'delete',
+    'list': 'view',
+    'detail': 'view'
+    }
+
 # model fields to diplay on the form
 
 FIELD_CONFIG = odict([
