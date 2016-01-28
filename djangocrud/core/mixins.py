@@ -1,3 +1,5 @@
+"""Mixins"""
+
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     PermissionRequiredMixin)
@@ -12,10 +14,12 @@ class BaseEntityMixin(object):
     """
     @property
     def title(self):
+        """Returns entity title"""
         return self.__class__.__name__
 
 
 class AuthMixin(LoginRequiredMixin, PermissionRequiredMixin):
+    """Sets permission required check"""
     def get_permission_required(self):
         return ['core.{0}_{1}'.format(
             CRUD_OPERATIONS[self.__class__.__name__.replace(

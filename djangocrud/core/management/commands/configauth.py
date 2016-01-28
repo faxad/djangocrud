@@ -1,3 +1,5 @@
+"""Command to create view permission for all models"""
+
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.management.base import BaseCommand
@@ -9,6 +11,7 @@ class Command(BaseCommand):
     help = 'Configures the permissions for models'
 
     def handle(self, *args, **options):
+        """Creates view_<model_name> permission"""
         for model in get_all_models():
             content_type = ContentType.objects.get_for_model(model)
             model_name = model.__name__.lower()

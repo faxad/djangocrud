@@ -10,6 +10,7 @@ env:
 install: 
   - pip install -q Django==$DJANGO_VERSION
   - pip install -r requirements.txt
+  - pip install pylint
 
 # command to run tests
-script: echo foo
+script: pylint ./djangocrud/ --ignore=migrations

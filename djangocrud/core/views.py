@@ -1,3 +1,5 @@
+"""Generic views for CRUD operations"""
+
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
@@ -18,6 +20,7 @@ from djangocrud.core.mixins import AuthMixin
 
 @login_required
 def index(request):
+    """Discovers models available for CRUD operations"""
     return render(
         request,
         'index.html',
@@ -25,10 +28,12 @@ def index(request):
 
 
 class EntityList(AuthMixin, generic.ListView):
+    """Generic view for List/Display operation"""
     template_name = 'core/index.html'
     context_object_name = 'objects'
 
     def dispatch(self, request, *args, **kwargs):
+        """Overriding dispatch on ListView"""
         self.model = get_model(**kwargs)
         queryset = self.model.objects.all()
 
@@ -37,9 +42,11 @@ class EntityList(AuthMixin, generic.ListView):
 
 
 class EntityDetail(AuthMixin, generic.DetailView):
+    """Generic view for Detail operation"""
     template_name = 'core/detail.html'
 
     def dispatch(self, request, *args, **kwargs):
+        """Overriding dispatch on DetailView"""
         self.model = get_model(**kwargs)
         queryset = self.model.objects.get(id=kwargs.get("pk"))
 
@@ -48,8 +55,9 @@ class EntityDetail(AuthMixin, generic.DetailView):
 
 
 class EntityDelete(AuthMixin, generic.DeleteView):
-
+    """Generic view for Delete operation"""
     def dispatch(self, request, *args, **kwargs):
+        """Overriding dispatch on DeleteView"""
         self.model = get_model(**kwargs)
         instance = get_model_instance(**kwargs)
         self.success_url = reverse_lazy('index', args=(instance.title,))
@@ -59,8 +67,9 @@ class EntityDelete(AuthMixin, generic.DeleteView):
 
 
 class EntityUpdate(AuthMixin, generic.View):
-
+    """Generic view for Update operation"""
     def get(self, request, *args, **kwargs):
+        """GET request handler for Update operation"""
         instance = get_model_instance(**kwargs)
         form = get_form_instance(**kwargs)
         context = {
@@ -71,6 +80,7 @@ class EntityUpdate(AuthMixin, generic.View):
         return render(request, 'core/update.html', context)
 
     def post(self, request, *args, **kwargs):
+        """POST request handler for Update operation"""
         instance = get_model_instance(**kwargs)
         form = get_form_instance(
             **kwargs)(request.POST, instance=instance)
@@ -94,14 +104,16 @@ class EntityUpdate(AuthMixin, generic.View):
 
 
 class EntityCreate(AuthMixin, generic.View):
-
+    """Generic view for Create operation"""
     def get(self, request, *args, **kwargs):
+        """GET request handler for Create operation"""
         form = get_form_instance(**kwargs)
         context = {'form': form}
 
         return render(request, 'core/create.html', context)
 
     def post(self, request, *args, **kwargs):
+        """POST request handler for Create operation"""
         model = get_model(**kwargs)
         form = get_form_instance(**kwargs)(request.POST)
 

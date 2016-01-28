@@ -1,3 +1,5 @@
+"""Core CRUD configuration/constants"""
+
 from collections import OrderedDict as odict
 
 

@@ -1,4 +1,7 @@
+"""Template Tags"""
+
 import itertools
+
 from collections import OrderedDict
 from django import template
 
@@ -8,6 +11,7 @@ register = template.Library()
 
 
 def get_entity_data(instance, option):
+    """Prepares the fields/data for display"""
     model = type(instance)
     field_config = FIELD_CONFIG[model.__name__]
 
@@ -24,11 +28,13 @@ def get_entity_data(instance, option):
 
 @register.filter(is_safe=True)
 def label_with_class(value, arg):
+    """Style adjustments"""
     return value.label_tag(attrs={'class': arg})
 
 
 @register.assignment_tag(takes_context=True)
 def model_field_values(context, option):
+    """Returns pair for field/values for display"""
     instance = context['object']
 
     return get_entity_data(instance, option)
@@ -36,6 +42,7 @@ def model_field_values(context, option):
 
 @register.assignment_tag(takes_context=True)
 def entity_preview(context):
+    """Returns pair for field/values for preview"""
     _parent = {}
     instances = context['objects']
 
@@ -48,4 +55,5 @@ def entity_preview(context):
 
 @register.assignment_tag
 def entity_type(object):
+    """Returns entity name"""
     return type(object).__name__
