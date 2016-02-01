@@ -12,6 +12,7 @@ class SupplierIndex(indexes.SearchIndex, indexes.Indexable):
     remarks = indexes.CharField(model_attr='remarks')
 
     def get_model(self):
+        """Model instance"""
         return Supplier
 
     def index_queryset(self, using=None):

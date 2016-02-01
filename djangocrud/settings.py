@@ -21,7 +21,7 @@ localpath = lambda p: join(dirname(__file__), p)
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 's*kbi04s%5u921e+d52kaa(e=d)%i4w@s6a6u8-x&bij^l8!q-'
+SECRET_KEY = 'test_s*kbi04s%5u921e+d52kaa(e=d)%i4w@s6a6u8-x&bij^l8!q-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

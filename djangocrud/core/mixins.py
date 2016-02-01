@@ -21,6 +21,7 @@ class BaseEntityMixin(object):
 class AuthMixin(LoginRequiredMixin, PermissionRequiredMixin):
     """Sets permission required check"""
     def get_permission_required(self):
+        """Returns permission names used by the mixin"""
         return ['core.{0}_{1}'.format(
             CRUD_OPERATIONS[self.__class__.__name__.replace(
                 'Entity', '').lower()],

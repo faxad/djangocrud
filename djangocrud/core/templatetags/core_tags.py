@@ -20,7 +20,7 @@ def get_entity_data(instance, option):
             if option in field_config[field_name]:
                 yield field_name
 
-    return OrderedDict([(model._meta.get_field(
+    return OrderedDict([(model().class_meta.get_field(
         field_name).verbose_name, getattr(
             instance, field_name)) for field_name in itertools.islice(
                 compute(field_config), len(field_config))])

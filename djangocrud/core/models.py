@@ -15,6 +15,13 @@ class AbstractEntity(Model):
     creation_date = DateTimeField('Creation Date', auto_now_add=True)
     last_updated = DateTimeField('Last Updated', auto_now=True)
 
+    @property
+    def class_meta(self):
+        return self._meta
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         abstract = True
 
@@ -25,9 +32,6 @@ class Supplier(AbstractEntity, BaseEntityMixin):
     category = CharField(verbose_name="Category/Type", max_length=10, choices=(
         ('PB', 'Public'), ('PR', 'Private')))
     remarks = TextField("Remarks", blank=True, null=True)
-
-    def __unicode__(self):
-        return self.name
 
     def clean(self):
         """Custom validation logic should go here"""
