@@ -17,10 +17,12 @@ class AbstractEntity(Model):
 
     @property
     def class_meta(self):
+        """Returns class meta"""
         return self._meta
 
     def __unicode__(self):
-        return self.name
+        """Returns ID"""
+        return self.id
 
     class Meta:
         abstract = True
@@ -31,7 +33,7 @@ class Supplier(AbstractEntity, BaseEntityMixin):
     name = CharField("Name", max_length=200, validators=[validate_name])
     category = CharField(verbose_name="Category/Type", max_length=10, choices=(
         ('PB', 'Public'), ('PR', 'Private')))
-    remarks = TextField("Remarks", blank=True, null=True)
+    remarks = TextField("Remarks", blank=True)
 
     def clean(self):
         """Custom validation logic should go here"""

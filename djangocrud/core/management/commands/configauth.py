@@ -8,6 +8,7 @@ from djangocrud.core.helpers import get_all_models
 
 
 class Command(BaseCommand):
+    """Command to configure permission"""
     help = 'Configures the permissions for models'
 
     def handle(self, *args, **options):
