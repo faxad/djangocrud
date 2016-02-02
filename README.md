@@ -1,6 +1,7 @@
 # djangoCRUD
 
 [![Build Status](https://travis-ci.org/faxad/djangoCRUD.svg?branch=master)](https://travis-ci.org/faxad/djangoCRUD)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/82d97392eecb4ffab85403390f6b25af)](https://www.codacy.com/app/fawadhq/djangoCRUD)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/2807a5b5bcdb46258ef0bcf7bb4e4d0f/badge.svg)](https://www.quantifiedcode.com/app/project/2807a5b5bcdb46258ef0bcf7bb4e4d0f)
 
 ### About
@@ -24,7 +25,7 @@ class Supplier(AbstractEntity, BaseEntityMixin):
     name = CharField("Name", max_length=200, validators=[validate_name])
     category = CharField(verbose_name="Category/Type", max_length=10, choices=(
         ('PB', 'Public'), ('PR', 'Private')))
-    remarks = TextField("Remarks", blank=True, null=True)
+    remarks = TextField("Remarks", blank=True)
 
     def clean(self):
         """Custom validation logic should go here"""
