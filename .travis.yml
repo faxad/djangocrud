@@ -11,7 +11,11 @@ install:
   - pip install -q Django==$DJANGO_VERSION
   - pip install -r requirements.txt
   - pip install pylint
+  - pip install coveralls
 
 # command to run tests
-#script: pylint ./djangocrud/ --ignore=migrations
-script: echo foo
+script:
+  - coverage run --source='.' manage.py test djangocrud.core.tests
+
+after_success:
+  - coveralls
