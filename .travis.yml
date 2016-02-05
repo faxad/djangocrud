@@ -9,8 +9,8 @@ env:
 # command to install dependencies
 install: 
   - pip install -q Django==$DJANGO_VERSION
+  - pip install whoosh
   - pip install -r requirements.txt
-  - pip install django-haystack
   - pip install pylint
   - pip install django_extensions
   - pip install coveralls
