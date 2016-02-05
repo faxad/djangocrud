@@ -75,3 +75,47 @@ class CoreTests(TestCase):
         count = Supplier.objects.filter(id=self.supplier.id).count()
 
         self.assertEqual(count, 0)
+
+    def test_create_view(self):
+        """Tests for create view"""
+        for verb in ('get', 'post'):
+            response = getattr(self.client, verb)(reverse(
+                'create',
+                kwargs={'model_name': 'Supplier'}))
+
+            self.assertEqual(response.context['form']._meta.model, Supplier)
+
+        response = self.client.post(reverse(
+            'create',
+            kwargs={'model_name': 'Supplier'}),
+            {'name': 'Jane Smith', 'category': 'PB', 'remarks': 'nothing'})
+
+        self.assertRedirects(
+            response,
+            reverse(
+                'index',
+                kwargs={'model_name': 'Supplier'}),
+            status_code=302,
+            target_status_code=200)
+
+    def test_udpate_view(self):
+        """Tests for update view"""
+        for verb in ('get', 'post'):
+            response = getattr(self.client, verb)(reverse(
+                'update',
+                kwargs={'model_name': 'Supplier', 'pk': self.supplier.id}))
+
+            self.assertEqual(response.context['form']._meta.model, Supplier)
+
+        response = self.client.post(reverse(
+            'update',
+            kwargs={'model_name': 'Supplier', 'pk': self.supplier.id}),
+            {'name': 'Jane Smith', 'category': 'PB', 'remarks': 'nothing'})
+
+        self.assertRedirects(
+            response,
+            reverse(
+                'index',
+                kwargs={'model_name': 'Supplier'}),
+            status_code=302,
+            target_status_code=200)
