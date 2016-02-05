@@ -22,7 +22,7 @@ class AbstractEntity(Model):
 
     def __unicode__(self):
         """Returns ID"""
-        return self.id
+        return str(self.id)
 
     class Meta:
         abstract = True
