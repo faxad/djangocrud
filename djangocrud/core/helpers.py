@@ -14,7 +14,7 @@ def get_errors(form_errors):
     errors = form_errors.as_data().copy()
     [error_list.append(
         e + ': ' + str(
-            list(errors[e])[0][0])) for e in errors]
+            list(errors[e])[0][0])) for e in list(errors)]
 
     return list(set(error_list))
 
