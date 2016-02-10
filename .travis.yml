@@ -6,15 +6,13 @@ python:
   - "3.5"
 
 env:
-  - DJANGO_VERSION=1.9 DB=postgres
+  - DJANGO_VERSION=1.9
 
 # command to install dependencies
 install: 
   - pip install -q Django==$DJANGO_VERSION
-  - pip install whoosh
   - pip install -r requirements.txt
   - pip install pylint
-  - pip install django_extensions
   - pip install coveralls
 
 # command to run tests
