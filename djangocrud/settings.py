@@ -12,10 +12,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from os.path import dirname, join
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-localpath = lambda p: join(dirname(__file__), p)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -111,7 +109,6 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(os.path.dirname(__file__), 'static'),
-    #localpath('static'),
 )
 
 # List of finder classes that know how to find static files in
