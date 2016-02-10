@@ -24,7 +24,7 @@ class AbstractEntity(Model):
         """Returns ID"""
         return str(self.id)
 
-    class Meta:
+    class Meta(object):
         abstract = True
 
 

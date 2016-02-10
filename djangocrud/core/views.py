@@ -66,7 +66,7 @@ class EntityDelete(AuthMixin, generic.DeleteView):
 
 class EntityUpdate(AuthMixin, generic.View):
     """Generic view for Update operation"""
-    def get(self, request, *args, **kwargs):
+    def get(self, request, **kwargs):
         """GET request handler for Update operation"""
         instance = get_model_instance(**kwargs)
         form = get_form_instance(**kwargs)
@@ -77,7 +77,7 @@ class EntityUpdate(AuthMixin, generic.View):
 
         return render(request, 'core/update.html', context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
         """POST request handler for Update operation"""
         instance = get_model_instance(**kwargs)
         form = get_form_instance(
@@ -103,14 +103,14 @@ class EntityUpdate(AuthMixin, generic.View):
 
 class EntityCreate(AuthMixin, generic.View):
     """Generic view for Create operation"""
-    def get(self, request, *args, **kwargs):
+    def get(self, request, **kwargs):
         """GET request handler for Create operation"""
         form = get_form_instance(**kwargs)
         context = {'form': form}
 
         return render(request, 'core/create.html', context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
         """POST request handler for Create operation"""
         model = get_model(**kwargs)
         form = get_form_instance(**kwargs)(request.POST)
