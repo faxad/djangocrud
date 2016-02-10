@@ -11,7 +11,7 @@ The intention was to develop a generic framework for rapid development of CRUD b
 Additionally, a simple configuration allows the developer to specify what fields to display in Create, Update, Display and Preview operations.
 
 ### Technology Stack
-- Python 2.7
+- Python 2.7x, 3.x
 - Django 1.9
 - Bootstrap 3.x
 
@@ -59,9 +59,6 @@ For search to work, the Haystack configuration should be added under **core/sear
 #### Step 5: Configure Permissions
 To configure the permission, run the following management command
 - ./manage.py configauth
-
-### Version
-0.5.0
 
 ### Who do I talk to? ###
 

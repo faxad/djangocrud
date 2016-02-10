@@ -35,7 +35,6 @@ class EntityList(AuthMixin, generic.ListView):
     def dispatch(self, request, *args, **kwargs):
         """Overriding dispatch on ListView"""
         self.model = get_model(**kwargs)
-        queryset = self.model.objects.all()
 
         return super(EntityList, self).dispatch(
             request, *args, **kwargs)
@@ -48,7 +47,6 @@ class EntityDetail(AuthMixin, generic.DetailView):
     def dispatch(self, request, *args, **kwargs):
         """Overriding dispatch on DetailView"""
         self.model = get_model(**kwargs)
-        queryset = self.model.objects.get(id=kwargs.get("pk"))
 
         return super(EntityDetail, self).dispatch(
             request, *args, **kwargs)

@@ -56,7 +56,7 @@ class CoreTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(
             response.context['objects'],
-            ['<Supplier: 1>'])
+            [repr(self.supplier)])
 
     def test_delete_view(self):
         """Tests for delete view"""
