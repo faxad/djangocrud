@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/faxad/djangoCRUD.svg?branch=master)](https://travis-ci.org/faxad/djangoCRUD)
 [![Coverage Status](https://coveralls.io/repos/github/faxad/djangoCRUD/badge.svg?branch=master)](https://coveralls.io/github/faxad/djangoCRUD?branch=master)
+[![Code Health](https://landscape.io/github/faxad/djangoCRUD/master/landscape.svg?style=flat)](https://landscape.io/github/faxad/djangoCRUD/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/82d97392eecb4ffab85403390f6b25af)](https://www.codacy.com/app/fawadhq/djangoCRUD)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/2807a5b5bcdb46258ef0bcf7bb4e4d0f/badge.svg)](https://www.quantifiedcode.com/app/project/2807a5b5bcdb46258ef0bcf7bb4e4d0f)
 
