@@ -12,11 +12,11 @@ def get_errors(form_errors):
     """Returns compiled form errors"""
     error_list = []
     errors = form_errors.as_data().copy()
-    [error_list.append(
+    errors = [error_list.append(
         e + ': ' + str(
             list(errors[e][0])[0])) for e in errors]
 
-    return list(set(error_list))
+    return list(set(errors))
 
 
 def get_all_models():

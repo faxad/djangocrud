@@ -11,7 +11,7 @@ The intention was to develop a generic framework for rapid development of CRUD b
 Additionally, a simple configuration allows the developer to specify what fields to display in Create, Update, Display and Preview operations.
 
 ### Technology Stack
-- Python 2.7x, 3.x
+- Python 2.7x, 3.4x, 3.5x
 - Django 1.9
 - Bootstrap 3.x
 
