@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'haystack',
-    'djangocrud.core'
+    'djangocrud.core',
+    'djangocrud.tests'
 )
 
 MIDDLEWARE_CLASSES = (

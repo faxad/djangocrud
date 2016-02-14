@@ -5,15 +5,15 @@ import itertools
 from collections import OrderedDict
 from django import template
 
-from djangocrud.core.constants import FIELD_CONFIG
+from djangocrud.core.helpers import discover_models
 
 register = template.Library()
 
 
-def get_entity_data(instance, option):
+def get_entity_data(instance, app, option):
     """Prepares the fields/data for display"""
     model = type(instance)
-    field_config = FIELD_CONFIG[model.__name__]
+    field_config = discover_models()[app][model.__name__]
 
     def compute(field_config):
         for field_name in field_config:
@@ -36,8 +36,9 @@ def label_with_class(value, arg):
 def model_field_values(context, option):
     """Returns pair for field/values for display"""
     instance = context['object']
+    app = context['app_title']
 
-    return get_entity_data(instance, option)
+    return get_entity_data(instance, app, option)
 
 
 @register.assignment_tag(takes_context=True)
@@ -45,10 +46,11 @@ def entity_preview(context):
     """Returns pair for field/values for preview"""
     _parent = {}
     instances = context['objects']
+    app = context['app_title']
 
     for instance in instances:
         _parent[instance.id] = get_entity_data(
-            instance, 'preview')
+            instance, app, 'preview')
 
     return _parent
 

@@ -6,7 +6,7 @@ from importlib import import_module
 from django.apps import apps
 from django.forms.models import modelform_factory
 
-from djangocrud.core.constants import FIELD_CONFIG, CRUD_APPS
+from djangocrud.core.constants import CRUD_APPS
 
 
 def get_errors(form_errors):
@@ -26,7 +26,7 @@ def discover_models():
     for app in CRUD_APPS:
         discovered[app] = import_module(
             'djangocrud.{}.crud'.format(app)
-        ).CRUD_MODELS
+        ).CRUD_MODELS_CONFIG
 
     return discovered
 
@@ -61,7 +61,8 @@ def get_model_instance(**kwargs):
 def get_form_instance(**kwargs):
     """Returns form instance"""
     fields = []
-    field_config = FIELD_CONFIG[get_model_name(**kwargs)]
+    field_config = discover_models()[get_app_name(
+        **kwargs)][get_model_name(**kwargs)]
     callee = type(inspect.currentframe().f_back.f_locals['self']).__name__
     operation = 'create' if 'Create' in callee else 'update'
 
