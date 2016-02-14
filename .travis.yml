@@ -17,7 +17,7 @@ install:
 
 # command to run tests
 script:
-  - coverage run --source='.' manage.py test djangocrud.core.tests
+  - coverage run --source='.' manage.py test djangocrud.tests
 
 after_success:
   - coveralls
