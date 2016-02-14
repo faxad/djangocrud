@@ -8,11 +8,12 @@ from django.template import RequestContext
 from django.views import generic
 
 from djangocrud.core.helpers import (
+    discover_models,
     get_errors,
     get_model,
     get_model_instance,
     get_form_instance,
-    get_all_models
+    get_app_name
 )
 
 from djangocrud.core.mixins import AuthMixin
@@ -24,7 +25,7 @@ def index(request):
     return render(
         request,
         'index.html',
-        {'models': get_all_models().values()})
+        {'discovered': discover_models()})
 
 
 class EntityList(AuthMixin, generic.ListView):
@@ -58,7 +59,9 @@ class EntityDelete(AuthMixin, generic.DeleteView):
         """Overriding dispatch on DeleteView"""
         self.model = get_model(**kwargs)
         instance = get_model_instance(**kwargs)
-        self.success_url = reverse_lazy('index', args=(instance.title,))
+        app_title = get_app_name(**kwargs)
+        self.success_url = reverse_lazy(
+            'index', args=(app_title, instance.title,))
 
         return super(EntityDelete, self).dispatch(
             request, *args, **kwargs)
@@ -80,6 +83,7 @@ class EntityUpdate(AuthMixin, generic.View):
     def post(self, request, **kwargs):
         """POST request handler for Update operation"""
         instance = get_model_instance(**kwargs)
+        app_title = get_app_name(**kwargs)
         form = get_form_instance(
             **kwargs)(request.POST, instance=instance)
 
@@ -87,7 +91,8 @@ class EntityUpdate(AuthMixin, generic.View):
             form.save()
 
             return HttpResponseRedirect(
-                reverse('index', args=(instance.title,)))
+                reverse('index', args=(
+                    app_title, instance.title,)))
         else:
             context = {
                 'form': form,
@@ -114,13 +119,15 @@ class EntityCreate(AuthMixin, generic.View):
         """POST request handler for Create operation"""
         model = get_model(**kwargs)
         form = get_form_instance(**kwargs)(request.POST)
+        app_title = get_app_name(**kwargs)
 
         if form.is_valid():
             instance = model(**form.cleaned_data)
             instance.save()
 
             return HttpResponseRedirect(
-                reverse('index', args=(instance.title,)))
+                reverse('index', args=(
+                    app_title, instance.title,)))
         else:
             context = {
                 'form': form,

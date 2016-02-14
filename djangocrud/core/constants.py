@@ -11,6 +11,12 @@ CRUD_OPERATIONS = {
     'detail': 'view'
     }
 
+# register apps for CRUD operations
+
+CRUD_APPS = [
+    'core'
+    ]
+
 # model fields to diplay on the form
 
 FIELD_CONFIG = odict([

@@ -9,7 +9,7 @@
   <li><a href="{% url 'main' %}">Home</a></li>
   <li class="active">{{ entity_title }}</li>
 </ol>
-<a href="{% url 'create' entity_title %}" class="btn btn-primary" role="button">Create</a>
+<a href="{% url 'create' app_title entity_title %}" class="btn btn-primary" role="button">Create</a>
 <h3>{{ entity_title }} List</h3>
 {{ message }}
 {% if objects %}
@@ -26,7 +26,7 @@
 			{% for name, value in instance.1.items %}
 				<td>{{ value }}</td>
 			{% endfor %}
-			<td><a class="btn btn-default btn-xs" href="{% url 'detail' entity_title instance.0 %}">View Detail</a></td>
+			<td><a class="btn btn-default btn-xs" href="{% url 'detail' app_title entity_title instance.0 %}">View Detail</a></td>
 	    </tr>
     {% endfor %}
 </table>

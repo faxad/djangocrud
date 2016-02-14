@@ -1,11 +1,12 @@
 """Helpers"""
 
 import inspect
+from importlib import import_module
 
 from django.apps import apps
 from django.forms.models import modelform_factory
 
-from djangocrud.core.constants import FIELD_CONFIG
+from djangocrud.core.constants import FIELD_CONFIG, CRUD_APPS
 
 
 def get_errors(form_errors):
@@ -16,23 +17,39 @@ def get_errors(form_errors):
         e + ': ' + str(
             list(errors[e][0])[0])) for e in errors]
 
-    return list(set(errors))
+    return list(set(error_list))
 
 
-def get_all_models():
-    """Returns all models"""
-    return apps.get_app_config('core').models
+def discover_models():
+    """Returns models configured for CRUD operation"""
+    discovered = {}
+    for app in CRUD_APPS:
+        discovered[app] = import_module(
+            'djangocrud.{}.crud'.format(app)
+        ).CRUD_MODELS
+
+    return discovered
+
+
+def get_app_name(request=None, **kwargs):
+    """Returns the name of app"""
+    return kwargs.get(
+        'app_name', request.path.split('/')[1] if request else None)
 
 
 def get_model_name(request=None, **kwargs):
     """Returns the name of model"""
-    return kwargs.get(
-        'model_name', request.path.split('/')[1] if request else None)
+    try:
+        return kwargs.get(
+            'model_name', request.path.split('/')[2] if request else None)
+    except IndexError:
+        return kwargs.get(
+            'model_name', request.path.split('/')[1] if request else None)
 
 
 def get_model(**kwargs):
     """Returns model"""
-    model = 'core.' + get_model_name(**kwargs)
+    model = get_app_name(**kwargs) + '.' + get_model_name(**kwargs)
     return apps.get_model(*model.split('.'))
 
 

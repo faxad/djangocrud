@@ -4,7 +4,7 @@
 
 <ol class="breadcrumb">
   <li><a href="{% url 'main' %}">Home</a></li>
-  <li><a href="{% url 'index' entity_title %}">{{ entity_title }}</a></li>
+  <li><a href="{% url 'index' app_title entity_title %}">{{ entity_title }}</a></li>
   <li class="active">Update</li>
 </ol>
 
@@ -12,7 +12,7 @@
 
 {% include "core/widgets/validation.html" with formset=formset error_messages=error_message %}
 
-<form action="{% url 'update' entity_title object.id %}" method="post" class="form-horizontal">
+<form action="{% url 'update' app_title entity_title object.id %}" method="post" class="form-horizontal">
     {% include 'core/widgets/form_fields_display.html' %}
 </form>
 {% endblock %}
