@@ -6,7 +6,7 @@ from django.db.models import (
 
 from djangocrud.core.mixins import BaseEntityMixin
 from djangocrud.core.models import AbstractEntity
-from djangocrud.core.validators import validate_initial_cap
+from djangocrud.tests.validators import validate_initial_cap
 
 
 class Foo(AbstractEntity, BaseEntityMixin):

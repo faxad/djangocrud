@@ -22,7 +22,9 @@ class AuthMixin(LoginRequiredMixin, PermissionRequiredMixin):
     """Sets permission required check"""
     def get_permission_required(self):
         """Returns permission names used by the mixin"""
-        return ['core.{0}_{1}'.format(
+
+        return ['{0}.{1}_{2}'.format(
+            self.request.path.split('/')[1],
             CRUD_OPERATIONS[self.__class__.__name__.replace(
                 'Entity', '').lower()],
             get_model_name(request=self.request).lower())]

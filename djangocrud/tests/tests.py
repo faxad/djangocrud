@@ -20,12 +20,12 @@ class CoreTests(TestCase):
             '12345')
 
         self.foo = Foo.objects.create(
-            name='supplier1', category='category1', remarks='remarks1')
+            bar='Sample', baz='CR', qux='Not Available')
 
         content_type = ContentType.objects.get_for_model(Foo)
 
         permissions = [Permission.objects.get_or_create(
-            codename='{}_supplier'.format(permission),
+            codename='{}_foo'.format(permission),
             content_type=content_type)[0] for permission in (
                 'view', 'delete', 'change', 'add')]
 
@@ -42,37 +42,45 @@ class CoreTests(TestCase):
         """Tests for detail view"""
         response = self.client.get(reverse(
             'detail',
-            kwargs={'model_name': 'Supplier', 'pk': self.supplier.id}))
+            kwargs={
+                'app_name': 'tests',
+                'model_name': 'Foo',
+                'pk': self.foo.id
+            }))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'category1')
+        self.assertContains(response, 'CR')
 
     def test_list_view(self):
         """Tests for list view"""
         response = self.client.get(reverse(
             'index',
-            kwargs={'model_name': 'Supplier'}))
+            kwargs={'app_name': 'tests', 'model_name': 'Foo'}))
 
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(
             response.context['objects'],
-            [repr(self.supplier)])
+            [repr(self.foo)])
 
     def test_delete_view(self):
         """Tests for delete view"""
         response = self.client.post(reverse(
             'delete',
-            kwargs={'model_name': 'Supplier', 'pk': self.supplier.id}))
+            kwargs={
+                'app_name': 'tests',
+                'model_name': 'Foo',
+                'pk': self.foo.id
+            }))
 
         self.assertRedirects(
             response,
             reverse(
                 'index',
-                kwargs={'model_name': 'Supplier'}),
+                kwargs={'app_name': 'tests', 'model_name': 'Foo'}),
             status_code=302,
             target_status_code=200)
 
-        count = Foo.objects.filter(id=self.supplier.id).count()
+        count = Foo.objects.filter(id=self.foo.id).count()
 
         self.assertEqual(count, 0)
 
@@ -81,20 +89,20 @@ class CoreTests(TestCase):
         for verb in ('get', 'post'):
             response = getattr(self.client, verb)(reverse(
                 'create',
-                kwargs={'model_name': 'Supplier'}))
+                kwargs={'app_name': 'tests', 'model_name': 'Foo'}))
 
             self.assertEqual(response.context['form']._meta.model, Foo)
 
         response = self.client.post(reverse(
             'create',
-            kwargs={'model_name': 'Supplier'}),
-            {'name': 'Jane Smith', 'category': 'PB', 'remarks': 'nothing'})
+            kwargs={'app_name': 'tests', 'model_name': 'Foo'}),
+            {'bar': 'Example', 'baz': 'WL', 'qux': 'Nothing'})
 
         self.assertRedirects(
             response,
             reverse(
                 'index',
-                kwargs={'model_name': 'Supplier'}),
+                kwargs={'app_name': 'tests', 'model_name': 'Foo'}),
             status_code=302,
             target_status_code=200)
 
@@ -103,19 +111,27 @@ class CoreTests(TestCase):
         for verb in ('get', 'post'):
             response = getattr(self.client, verb)(reverse(
                 'update',
-                kwargs={'model_name': 'Supplier', 'pk': self.supplier.id}))
+                kwargs={
+                    'app_name': 'tests',
+                    'model_name': 'Foo',
+                    'pk': self.foo.id
+                }))
 
             self.assertEqual(response.context['form']._meta.model, Foo)
 
         response = self.client.post(reverse(
             'update',
-            kwargs={'model_name': 'Supplier', 'pk': self.supplier.id}),
-            {'name': 'Jane Smith', 'category': 'PB', 'remarks': 'nothing'})
+            kwargs={
+                'app_name': 'tests',
+                'model_name': 'Foo',
+                'pk': self.foo.id
+            }),
+            {'bar': 'Example', 'baz': 'WL', 'qux': 'Nothing'})
 
         self.assertRedirects(
             response,
             reverse(
                 'index',
-                kwargs={'model_name': 'Supplier'}),
+                kwargs={'app_name': 'tests', 'model_name': 'Foo'}),
             status_code=302,
             target_status_code=200)
