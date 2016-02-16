@@ -24,8 +24,9 @@ def discover():
     """Returns apps and models configured for CRUD operation"""
     discovered = {}
     for app in CRUD_APPS:
+        name = apps.get_app_config(app).name
         discovered[app] = import_module(
-            'djangocrud.{}.crud'.format(app)
+            '{}.crud'.format(name)
         ).CRUD_MODELS_CONFIG
 
     return discovered
@@ -53,8 +54,10 @@ def get_model_name(request=None, **kwargs):
 
 def get_model(**kwargs):
     """Returns model"""
-    model = get_app_name(**kwargs) + '.' + get_model_name(**kwargs)
-    return apps.get_model(*model.split('.'))
+    return apps.get_model(
+        get_app_name(**kwargs),
+        get_model_name(**kwargs)
+    )
 
 
 def get_model_instance(**kwargs):
