@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.views import generic
 
 from djangocrud.core.helpers import (
-    discover_models,
+    discover,
     get_errors,
     get_model,
     get_model_instance,
@@ -25,7 +25,7 @@ def index(request):
     return render(
         request,
         'index.html',
-        {'discovered': discover_models()})
+        {'discovered': discover()})
 
 
 class EntityList(AuthMixin, generic.ListView):

@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin)
 
 from djangocrud.core.constants import CRUD_OPERATIONS
-from djangocrud.core.helpers import get_model_name
+from djangocrud.core.helpers import get_model_name, get_app_name
 
 
 class BaseEntityMixin(object):
@@ -22,9 +22,8 @@ class AuthMixin(LoginRequiredMixin, PermissionRequiredMixin):
     """Sets permission required check"""
     def get_permission_required(self):
         """Returns permission names used by the mixin"""
-
         return ['{0}.{1}_{2}'.format(
-            self.request.path.split('/')[1],
+            get_app_name(request=self.request),
             CRUD_OPERATIONS[self.__class__.__name__.replace(
                 'Entity', '').lower()],
             get_model_name(request=self.request).lower())]

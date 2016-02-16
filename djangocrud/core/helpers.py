@@ -20,8 +20,8 @@ def get_errors(form_errors):
     return list(set(error_list))
 
 
-def discover_models():
-    """Returns models configured for CRUD operation"""
+def discover():
+    """Returns apps and models configured for CRUD operation"""
     discovered = {}
     for app in CRUD_APPS:
         discovered[app] = import_module(
@@ -31,20 +31,24 @@ def discover_models():
     return discovered
 
 
+def extract_from_url(request, position):
+    """Returns app/model from url"""
+    return request.path.split('/')[position] if request else None
+
+
 def get_app_name(request=None, **kwargs):
     """Returns the name of app"""
     return kwargs.get(
-        'app_name', request.path.split('/')[1] if request else None)
+        'app_name', extract_from_url(request, 1))
 
 
 def get_model_name(request=None, **kwargs):
     """Returns the name of model"""
     try:
         return kwargs.get(
-            'model_name', request.path.split('/')[2] if request else None)
-    except IndexError:
-        return kwargs.get(
-            'model_name', request.path.split('/')[1] if request else None)
+            'model_name', extract_from_url(request, 2))
+    except:
+        pass
 
 
 def get_model(**kwargs):
@@ -61,7 +65,7 @@ def get_model_instance(**kwargs):
 def get_form_instance(**kwargs):
     """Returns form instance"""
     fields = []
-    field_config = discover_models()[get_app_name(
+    field_config = discover()[get_app_name(
         **kwargs)][get_model_name(**kwargs)]
     callee = type(inspect.currentframe().f_back.f_locals['self']).__name__
     operation = 'create' if 'Create' in callee else 'update'
