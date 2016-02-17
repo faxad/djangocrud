@@ -96,7 +96,14 @@ class CoreTests(TestCase):
         response = self.client.post(reverse(
             'create',
             kwargs={'app_name': 'tests', 'model_name': 'Foo'}),
-            {'bar': 'Example', 'baz': 'WL', 'qux': 'Nothing'})
+            {'bar': 'example - small e', 'baz': 'WL', 'qux': 'Nothing'})
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(reverse(
+            'create',
+            kwargs={'app_name': 'tests', 'model_name': 'Foo'}),
+            {'bar': 'Example - big E', 'baz': 'WL', 'qux': 'Nothing'})
 
         self.assertRedirects(
             response,

@@ -56,6 +56,6 @@ def entity_preview(context):
 
 
 @register.assignment_tag
-def model_label(object):
+def model_label_for_search(object):
     """Returns entity name"""
     return type(object).__name__

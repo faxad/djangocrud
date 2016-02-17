@@ -14,7 +14,7 @@
                     <th>Brief Description</th>
                 </tr>
                 {% for result in page.object_list %}
-                {% model_label result.object as entity_name %}
+                {% model_label_for_search result.object as entity_name %}
                     <tr>
                         <td><a href="{% url 'detail' entity_name result.object.id %}">{{ result.object.name }}</a><td>
                         <td></td>

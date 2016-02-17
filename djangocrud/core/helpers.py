@@ -48,7 +48,7 @@ def get_model_name(request=None, **kwargs):
     try:
         return kwargs.get(
             'model_name', extract_from_url(request, 2))
-    except:
+    except IndexError:
         pass
 
 
