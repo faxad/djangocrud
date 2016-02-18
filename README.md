@@ -19,9 +19,14 @@ Additionally, a simple configuration allows the developer to specify what fields
 ### Usage & Configuration
 
 #### Step 1: App Registration for CRUD Operations
-- Add your app to **CRUD_CONFIG** under **core/constants**
-- Comment out the **tests** app in **CRUD_CONFIG** (for demo purpose only)
-
+- Add your app to **CRUD_APPS** under **core/constants**
+- Comment out the **tests** app (for demo purpose only)
+```python
+CRUD_APPS = [
+    'tests',
+    'procurement_logistics '
+]
+```
 #### Step 2: Model Configuration
 - All models must inherit from **AbstractEntity** and use the **BaseEntityMixin**
 ```python
