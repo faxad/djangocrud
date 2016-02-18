@@ -13,15 +13,21 @@ Additionally, a simple configuration allows the developer to specify what fields
 
 ### Technology Stack
 - Python 2.7x, 3.4x, 3.5x
-- Django 1.9
+- Django 1.9x
 - Bootstrap 3.x
 
-### Usage
+### Usage & Configuration
 
-#### Step 1: Define Model
-- Model definition should go under **core/models**
-- All models must inherit from **AbstractEntity** combined with **BaseEntityMixin**
-```sh
+#### Step 1: App Registration for CRUD Operations
+- Add your app to **CRUD_CONFIG** under **core/constants**
+- Comment out the **tests** app in **CRUD_CONFIG** (for demo purpose only)
+
+#### Step 2: Model Configuration
+- All models must inherit from **AbstractEntity** and use the **BaseEntityMixin**
+```python
+from djangocrud.core.mixins import BaseEntityMixin
+from djangocrud.core.models import AbstractEntity
+
 class Supplier(AbstractEntity, BaseEntityMixin):
     """Sample representation of Supplier"""
     name = CharField("Name", max_length=200, validators=[validate_name])
@@ -33,17 +39,19 @@ class Supplier(AbstractEntity, BaseEntityMixin):
         """Custom validation logic should go here"""
         pass
 ```
-#### Step 2: Define Validation Logic (Optional)
+#### Step 3: Define Validation Logic (Optional)
 - Custom validation logic should go under **clean()** on the model itself
-- Custom field specific validation should be defined in **core/validators** and applied to the field as **validators** attribute
+- Custom field specific validation should be defined and applied to the field as **validators** attribute
 
-#### Step 3: Configure Field Visibility
-Nested Ordered Dictionary in core/constants must define the visbility of fields on the templates and forms.
-- **create:** available on create form
-- **update:** available on update form
-- **display:** available for display in detail view
-- **preview:** available for display in list view
-```sh
+#### Step 4: Configure Field Visibility
+- Add **crud.py** under your app and define **FIELD_CONFIG** as Nested Ordered Dictionary
+- Include the models which you want to be exposed for CRUD operations
+- Define for each model the visbility of fields for display on the templates and forms 
+    - **create:** available on create form
+    - **update:** available on update form
+    - **display:** available for display in detail view
+    - **preview:** available for display in list view
+```python
 FIELD_CONFIG = odict([
     ('Supplier', odict([
         ('name', ['create', 'update', 'display', 'preview']),
@@ -54,13 +62,9 @@ FIELD_CONFIG = odict([
     ])),
 ])
 ```
-#### Step 4: Configure Search & Indexing (Optional)
+#### Step 5: Configure Search & Indexing (Optional)
 For search to work, the Haystack configuration should be added under **core/search_indexes**
 
-#### Step 5: Configure Permissions
+#### Step 6: Configure Permissions
 To configure the permission, run the following management command
 - ./manage.py configauth
-
-### Who do I talk to? ###
-
-* Fawad H Qureshi | <fawad@outlook.com>
