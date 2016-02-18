@@ -24,7 +24,7 @@ Additionally, a simple configuration allows the developer to specify what fields
 ```python
 CRUD_APPS = [
     'tests',
-    'procurement_logistics '
+    'procurement_logistics'
 ]
 ```
 #### Step 2: Model Configuration
@@ -69,5 +69,5 @@ FIELD_CONFIG = odict([
 ```
 
 #### Step 5: Configure Permissions
-To configure the permission, run the following management command
+Execute the following management command to configure the permissions
 - ./manage.py configauth
