@@ -62,9 +62,7 @@ FIELD_CONFIG = odict([
     ])),
 ])
 ```
-#### Step 5: Configure Search & Indexing (Optional)
-For search to work, the Haystack configuration should be added under **core/search_indexes**
 
-#### Step 6: Configure Permissions
+#### Step 5: Configure Permissions
 To configure the permission, run the following management command
 - ./manage.py configauth

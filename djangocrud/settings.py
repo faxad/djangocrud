@@ -122,7 +122,7 @@ STATICFILES_FINDERS = (
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': os.path.join(BASE_DIR, 'search_indexes'),
+        'PATH': os.path.join(BASE_DIR, 'indexes'),
         'INCLUDE_SPELLING': 300,
         'BATCH_SIZE': 100,
     }
