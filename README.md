@@ -4,7 +4,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/faxad/djangoCRUD/badge.svg?branch=master)](https://coveralls.io/github/faxad/djangoCRUD?branch=master)
 [![Code Health](https://landscape.io/github/faxad/djangoCRUD/master/landscape.svg?style=flat)](https://landscape.io/github/faxad/djangoCRUD/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/82d97392eecb4ffab85403390f6b25af)](https://www.codacy.com/app/fawadhq/djangoCRUD)
-[![Code Issues](https://www.quantifiedcode.com/api/v1/project/2807a5b5bcdb46258ef0bcf7bb4e4d0f/badge.svg)](https://www.quantifiedcode.com/app/project/2807a5b5bcdb46258ef0bcf7bb4e4d0f)
 
 ### About
 The intention was to develop a generic framework for rapid development of CRUD based web applications. The framework simplifies the development process by relying only on Model creation. The generic framework takes care of providing the necessary Views, Templates, Forms and URLs.
